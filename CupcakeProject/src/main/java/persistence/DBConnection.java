@@ -14,7 +14,7 @@ public class DBConnection {
 
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
 
-        String dbproperties = "/Users/frederikbraagaard/Documents/CupcakeProject/CupcakeProject/src/main/java/logic/db.properties";
+        String dbproperties = "/PATH/TO/DB.PROPERTIES";
 
         try (FileInputStream f = new FileInputStream(dbproperties)) {
 
