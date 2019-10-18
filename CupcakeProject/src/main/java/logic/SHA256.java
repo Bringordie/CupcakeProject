@@ -4,32 +4,25 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import javax.xml.bind.DatatypeConverter;
 
 
 public class SHA256 {
     
-    public static byte[] getSHA(String input) throws NoSuchAlgorithmException {
-        //Static getInstance methos is called with hashing SHA
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        //digest() method called
-        //to calculate message digest of an input
-        //and return array of byte
-        return md.digest(input.getBytes(StandardCharsets.UTF_8));
-    }
-    
-    public static String toHexString(byte[] hash) {
-        //Convert byte array into signum representation
-        BigInteger number = new BigInteger(1, hash);
+
+    public static String getHash(byte[] inputBytes) {
+        String hashValue = "";
         
-        //Convert message digest into hex value
-        StringBuilder hexString = new StringBuilder(number.toString(16));
-        
-        //Pad with leading zeroes
-        while(hexString.length() < 32) {
-            hexString.insert(0, '0');
+        try {
+            //Static getInstance methos is called with hashing SHA-256
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(inputBytes);
+            byte[] digestedByte = md.digest();
+            hashValue = DatatypeConverter.printHexBinary(digestedByte).toLowerCase();
+        } catch (Exception e) {
+            System.err.println("An error has occured");
         }
-        
-        return hexString.toString();
+        return hashValue;
     }
-    
+            
 }
