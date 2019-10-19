@@ -1,7 +1,7 @@
 DROP TABLE if exists completeorders;
 DROP TABLE if exists users;
 DROP TABLE if exists toppings;
-DROP TABLE if exists buttoms;
+DROP TABLE if exists bottoms;
 
 
 CREATE TABLE users (
@@ -31,18 +31,18 @@ CREATE TABLE toppings (
     primary key (idToppings)
 );
 
-CREATE TABLE buttoms (
-	idButtoms INTEGER not null AUTO_INCREMENT,
-    buttomName VARCHAR(45),
+CREATE TABLE bottoms (
+	idBottoms INTEGER not null AUTO_INCREMENT,
+    bottomName VARCHAR(45),
     Price DOUBLE,
-    primary key (idButtoms)
+    primary key (idBottoms)
 );
 
-insert into buttoms (buttomName, Price) values ("Chocolate", 5.00);
-insert into buttoms (buttomName, Price) values ("Vanilla", 5.00);
-insert into buttoms (buttomName, Price) values ("Nutmeg", 5.00);
-insert into buttoms (buttomName, Price) values ("Pistacio", 6.00);
-insert into buttoms (buttomName, Price) values ("Almond", 7.00);
+insert into bottoms (bottomName, Price) values ("Chocolate", 5.00);
+insert into bottoms (bottomName, Price) values ("Vanilla", 5.00);
+insert into bottoms (bottomName, Price) values ("Nutmeg", 5.00);
+insert into bottoms (bottomName, Price) values ("Pistacio", 6.00);
+insert into bottoms (bottomName, Price) values ("Almond", 7.00);
 
 insert into toppings (toppingName, Price) values ("Chocolate", 5.00);
 insert into toppings (toppingName, Price) values ("Blueberry", 5.00);
