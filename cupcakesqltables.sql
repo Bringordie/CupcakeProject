@@ -33,7 +33,23 @@ CREATE TABLE toppings (
 
 CREATE TABLE buttoms (
 	idButtoms INTEGER not null AUTO_INCREMENT,
-    toppingName VARCHAR(45),
+    buttomName VARCHAR(45),
     Price DOUBLE,
     primary key (idButtoms)
 );
+
+insert into buttoms (buttomName, Price) values ("Chocolate", 5.00);
+insert into buttoms (buttomName, Price) values ("Vanilla", 5.00);
+insert into buttoms (buttomName, Price) values ("Nutmeg", 5.00);
+insert into buttoms (buttomName, Price) values ("Pistacio", 6.00);
+insert into buttoms (buttomName, Price) values ("Almond", 7.00);
+
+insert into toppings (toppingName, Price) values ("Chocolate", 5.00);
+insert into toppings (toppingName, Price) values ("Blueberry", 5.00);
+insert into toppings (toppingName, Price) values ("Rasberry", 5.00);
+insert into toppings (toppingName, Price) values ("Crispy", 6.00);
+insert into toppings (toppingName, Price) values ("Strawberry", 6.00);
+insert into toppings (toppingName, Price) values ("Rum/Raisin", 7.00);
+insert into toppings (toppingName, Price) values ("Orange", 8.00);
+insert into toppings (toppingName, Price) values ("Lemon", 8.00);
+insert into toppings (toppingName, Price) values ("Blue cheese", 9.00);
