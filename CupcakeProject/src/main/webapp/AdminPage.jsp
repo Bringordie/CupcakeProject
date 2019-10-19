@@ -11,4 +11,5 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>AdminPage Page</title>
     </head>
+    <h1>Welcome to Admin Page</h1>
 </html>

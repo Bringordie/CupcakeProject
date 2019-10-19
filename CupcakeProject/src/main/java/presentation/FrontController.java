@@ -1,4 +1,3 @@
-
 package presentation;
 
 import java.io.IOException;
@@ -15,10 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import logic.SHA256;
 import persistence.CupCakeMapper;
 
-
 @WebServlet(name = "FrontController", urlPatterns = {"/FrontController"})
 public class FrontController extends HttpServlet {
-
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
@@ -29,9 +26,15 @@ public class FrontController extends HttpServlet {
             case "gotoRegisterUser":
                 goToUserRegistration(request, response);
                 break;
+            case "gotoLoginUser":
+                goToLoginUser(request, response);
+                break;
+            case "login":
+                userLogin(request, response);
+                break;
             default:
                 break;
-    }
+        }
     }
 
     public void userRegistration(HttpServletRequest request, HttpServletResponse response)
@@ -40,22 +43,44 @@ public class FrontController extends HttpServlet {
         String password = request.getParameter("password");
         String encrypt = SHA256.getHash(password.getBytes());
         CupCakeMapper.reqisterUser(username, encrypt);
-        
+
         RequestDispatcher rd = request.getRequestDispatcher("CustomerPage.jsp");
         rd.forward(request, response);
     }
-    
+
+    public void userLogin(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException, ClassNotFoundException {
+        String username = request.getParameter("usernamelogin");
+        String password = request.getParameter("passwordlogin");
+        Boolean usernameDB = CupCakeMapper.checkUsername(username);
+        Boolean passwordDB = CupCakeMapper.checkPassword(username, password);
+        Boolean getRole = CupCakeMapper.checkRole(username);
+        if (usernameDB && passwordDB == true && getRole == true) {
+            RequestDispatcher rd = request.getRequestDispatcher("AdminPage.jsp");
+            rd.forward(request, response);
+        } else if (usernameDB && passwordDB == true && getRole == false) {
+            RequestDispatcher rd = request.getRequestDispatcher("CustomerPage.jsp");
+            rd.forward(request, response);
+        } else {
+            //Wrong password or username
+            //Test example
+            RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
+            rd.forward(request, response);
+        }
+    }
+
     public void goToUserRegistration(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         RequestDispatcher rd = request.getRequestDispatcher("Registration.jsp");
         rd.forward(request, response);
     }
-    
-    
-    
-    
-    
-    
+
+    public void goToLoginUser(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException, ClassNotFoundException {
+        RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
+        rd.forward(request, response);
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -74,7 +99,7 @@ public class FrontController extends HttpServlet {
             Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }
 
     /**

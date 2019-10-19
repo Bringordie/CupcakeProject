@@ -14,7 +14,7 @@
         <input type="hidden" name="cmd" value="registration" />
         <p>Username:      <input type="text" name="username" required/></p>
         <p>Password:      <input type="password" name="password" required/> </p>
-        <input type="submit" value="Submit order" />
+        <input type="submit" value="Register" />
     </form>
 
     </head>
