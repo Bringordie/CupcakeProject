@@ -8,7 +8,7 @@ public class Bottom {
     private String type = "Bottom";
     private final double price;
     
-    public Bottom (String name, double price, int id, String type) {
+    public Bottom (String name, double price, int id) {
         this.name = name;
         this.price = price;
         this.id = id;

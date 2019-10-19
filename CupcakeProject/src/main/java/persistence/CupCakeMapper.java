@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import logic.Bottom;
 import logic.SHA256;
+import logic.Topping;
 import logic.User;
 import static persistence.DBConnection.getConnection;
 
@@ -88,8 +90,42 @@ public class CupCakeMapper {
         return roleBoolean;
     }
     
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        System.out.println(CupCakeMapper.checkRole("Bringordie"));
+    public static ArrayList<Topping> getToppings() throws SQLException, ClassNotFoundException {
+        ArrayList<Topping> toppings = new ArrayList();
+        String sql = "select * from toppings";
+        ResultSet result = null;
+            result = getConnection().prepareStatement(sql).executeQuery();
+
+        try {
+            while (result.next()) {
+                int idTopping = result.getInt(1);
+                String toppingName = result.getString(2);
+                double price = result.getDouble(3);
+                toppings.add(new Topping(toppingName, price, idTopping));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return toppings;
+    }
+    
+    public static ArrayList<Bottom> getButtoms() throws SQLException, ClassNotFoundException {
+        ArrayList<Bottom> bottoms = new ArrayList();
+        String sql = "select * from buttoms";
+        ResultSet result = null;
+            result = getConnection().prepareStatement(sql).executeQuery();
+
+        try {
+            while (result.next()) {
+                int idButtom = result.getInt(1);
+                String buttomName = result.getString(2);
+                double price = result.getDouble(3);
+                bottoms.add(new Bottom(buttomName, price, idButtom));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return bottoms;
     }
 
 

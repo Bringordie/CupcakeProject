@@ -3,6 +3,7 @@ package presentation;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -11,7 +12,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import logic.Bottom;
 import logic.SHA256;
+import logic.Topping;
 import persistence.CupCakeMapper;
 
 @WebServlet(name = "FrontController", urlPatterns = {"/FrontController"})
@@ -32,6 +35,9 @@ public class FrontController extends HttpServlet {
             case "login":
                 userLogin(request, response);
                 break;
+            case "goToProducts":
+                goToProducts(request, response);
+                break;
             default:
                 break;
         }
@@ -44,7 +50,7 @@ public class FrontController extends HttpServlet {
         String encrypt = SHA256.getHash(password.getBytes());
         CupCakeMapper.reqisterUser(username, encrypt);
 
-        RequestDispatcher rd = request.getRequestDispatcher("CustomerPage.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("WEB-INF\\CustomerPage.jsp");
         rd.forward(request, response);
     }
 
@@ -56,10 +62,10 @@ public class FrontController extends HttpServlet {
         Boolean passwordDB = CupCakeMapper.checkPassword(username, password);
         Boolean getRole = CupCakeMapper.checkRole(username);
         if (usernameDB && passwordDB == true && getRole == true) {
-            RequestDispatcher rd = request.getRequestDispatcher("AdminPage.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("WEB-INF\\AdminPage.jsp");
             rd.forward(request, response);
         } else if (usernameDB && passwordDB == true && getRole == false) {
-            RequestDispatcher rd = request.getRequestDispatcher("CustomerPage.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("WEB-INF\\CustomerPage.jsp");
             rd.forward(request, response);
         } else {
             //Wrong password or username
@@ -78,6 +84,18 @@ public class FrontController extends HttpServlet {
     public void goToLoginUser(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
+        rd.forward(request, response);
+    }
+    
+    public void goToProducts(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException, ClassNotFoundException {
+        ArrayList<Bottom> bottoms = CupCakeMapper.getButtoms();
+        request.getSession().setAttribute("bottoms", bottoms);
+        
+        ArrayList<Topping> toppings = CupCakeMapper.getToppings();
+        request.getSession().setAttribute("toppings", toppings);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("WEB-INF\\Products.jsp");
         rd.forward(request, response);
     }
 

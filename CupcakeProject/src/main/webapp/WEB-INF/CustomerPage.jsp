@@ -13,5 +13,11 @@
     </head>
     <body>
     <h1>Hello Customer</h1>
+    
+    <form action="FrontController" >
+                <input type="hidden" name="cmd" value="goToProducts" />
+                <input type="submit" value="See all products available" align="right"/>
+            </form>
+    
     <body>
 </html>
