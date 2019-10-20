@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import logic.Bottom;
 import logic.SHA256;
 import logic.Topping;
+import logic.User;
 import persistence.CupCakeMapper;
 
 @WebServlet(name = "FrontController", urlPatterns = {"/FrontController"})
@@ -37,6 +38,9 @@ public class FrontController extends HttpServlet {
                 break;
             case "goToProducts":
                 goToProducts(request, response);
+                break;
+            case "addBalance":
+                addBalance(request, response);
                 break;
             default:
                 break;
@@ -76,6 +80,11 @@ public class FrontController extends HttpServlet {
         Boolean usernameDB = CupCakeMapper.checkUsername(username);
         Boolean passwordDB = CupCakeMapper.checkPassword(username, password);
         Boolean getRole = CupCakeMapper.checkRole(username);
+        
+        User saveUsername = new User();
+        saveUsername.setUsername(username);
+        
+        
         if (usernameDB && passwordDB == true && getRole == true) {
             RequestDispatcher rd = request.getRequestDispatcher("WEB-INF\\AdminPage.jsp");
             rd.forward(request, response);
@@ -84,7 +93,7 @@ public class FrontController extends HttpServlet {
             rd.forward(request, response);
         } else {
             //Wrong password or username
-            //Test example
+            //Test example?
             RequestDispatcher rd = request.getRequestDispatcher("LoginError.jsp");
             rd.forward(request, response);
         }
@@ -122,7 +131,23 @@ public class FrontController extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("WEB-INF\\Products.jsp");
         rd.forward(request, response);
     }
+    
+    /**
+     * @author Bringordie - Frederik Braagaard
+    */
+    public void addBalance(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException, ClassNotFoundException {
+        double balanceToAdd = Double.parseDouble(request.getParameter("AddBalance"));
+        
+        User getUsername = new User();
+        String username4 = (String) getUsername.getUsername();
+        CupCakeMapper.updateBalance(username4, balanceToAdd);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("WEB-INF\\CustomerPage.jsp");
+        rd.forward(request, response);
+    }
 
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

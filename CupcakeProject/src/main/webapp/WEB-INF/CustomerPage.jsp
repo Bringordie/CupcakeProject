@@ -19,5 +19,12 @@
                 <input type="submit" value="See all products available" align="right"/>
             </form>
     
+    <form action="FrontController" method="POST">
+        <input type="hidden" name="cmd" value="addBalance" />
+        <p>Add balance:</p>
+        <input type="number" step="0.01" name="AddBalance" value="" /> 
+        <input type="submit" value="AddBalance" />
+    </form>
+    
     <body>
 </html>
