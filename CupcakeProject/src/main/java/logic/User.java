@@ -8,17 +8,17 @@ public class User {
     private double balance;
     private final String email;
     private final String name;
-    private final Boolean role;
     
-    public User(String username, String password, double balance, String email, 
-            String name, Boolean role) {
+    /**
+     * @author Bringordie - Frederik Braagaard
+    */
+    public User(String username, String password, String email, 
+            String name) {
        this.username = username;
        this.password = password;
        this.balance = balance;
        this.email = email;
        this.name = name;
-       this.role = role;
-       
     }
 
     public String getUsername() {
@@ -37,9 +37,6 @@ public class User {
         return name;
     }
 
-    public Boolean getRole() {
-        return role;
-    }
 
     public void setBalance(double balance) {
         this.balance = balance;

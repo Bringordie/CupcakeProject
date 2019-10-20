@@ -43,17 +43,32 @@ public class FrontController extends HttpServlet {
         }
     }
 
+    /**
+     * @author Bringordie - Frederik Braagaard
+    */
     public void userRegistration(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
         String encrypt = SHA256.getHash(password.getBytes());
-        CupCakeMapper.reqisterUser(username, encrypt);
-
-        RequestDispatcher rd = request.getRequestDispatcher("WEB-INF\\CustomerPage.jsp");
-        rd.forward(request, response);
+        
+         Boolean usernameDB = CupCakeMapper.checkUsername(username);
+         
+         if (usernameDB == false){
+             CupCakeMapper.reqisterUser(username, encrypt, name, email);
+            RequestDispatcher rd = request.getRequestDispatcher("WEB-INF\\CustomerPage.jsp");
+            rd.forward(request, response);
+         } else {
+            RequestDispatcher rd = request.getRequestDispatcher("RegistrationError.jsp");
+            rd.forward(request, response);
+         }
     }
 
+    /**
+     * @author Bringordie - Frederik Braagaard
+    */
     public void userLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         String username = request.getParameter("usernamelogin");
@@ -70,23 +85,32 @@ public class FrontController extends HttpServlet {
         } else {
             //Wrong password or username
             //Test example
-            RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("LoginError.jsp");
             rd.forward(request, response);
         }
     }
 
+    /**
+     * @author Bringordie - Frederik Braagaard
+    */
     public void goToUserRegistration(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         RequestDispatcher rd = request.getRequestDispatcher("Registration.jsp");
         rd.forward(request, response);
     }
 
+    /**
+     * @author Bringordie - Frederik Braagaard
+    */
     public void goToLoginUser(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
         rd.forward(request, response);
     }
     
+    /**
+     * @author Bringordie - Frederik Braagaard
+    */
     public void goToProducts(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         ArrayList<Bottom> bottoms = CupCakeMapper.getButtoms();

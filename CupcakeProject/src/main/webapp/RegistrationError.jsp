@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Registration
-    Created on : Oct 17, 2019, 1:57:22 PM
+    Document   : RegistrationError
+    Created on : 20-10-2019, 14:57:00
     Author     : 
 --%>
 
@@ -9,9 +9,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Registration Page</title>
+        <title>Error registrating</title>
     <form action="FrontController" method="POST">
         <input type="hidden" name="cmd" value="registration" />
+        <b> Username is already taken, please choose a different one </b>
         <p>Username:      <input type="text" name="username" required/></p>
         <p>Password:      <input type="password" name="password" required/> </p>
         <p>Name:          <input type="text" name="name" required/> </p>
