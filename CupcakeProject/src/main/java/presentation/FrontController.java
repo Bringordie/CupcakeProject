@@ -122,7 +122,7 @@ public class FrontController extends HttpServlet {
     */
     public void goToProducts(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
-        ArrayList<Bottom> bottoms = CupCakeMapper.getButtoms();
+        ArrayList<Bottom> bottoms = CupCakeMapper.getBottoms();
         request.getSession().setAttribute("bottoms", bottoms);
         
         ArrayList<Topping> toppings = CupCakeMapper.getToppings();

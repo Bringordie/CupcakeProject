@@ -145,9 +145,9 @@ public class CupCakeMapper {
      * @author Bringordie - Frederik Braagaard
      * @return returns an arraylist of all the buttoms in the DB.
      */
-    public static ArrayList<Bottom> getButtoms() throws SQLException, ClassNotFoundException {
+    public static ArrayList<Bottom> getBottoms() throws SQLException, ClassNotFoundException {
         ArrayList<Bottom> bottoms = new ArrayList();
-        String sql = "select * from buttoms";
+        String sql = "select * from bottoms";
         ResultSet result = null;
         result = getConnection().prepareStatement(sql).executeQuery();
 
