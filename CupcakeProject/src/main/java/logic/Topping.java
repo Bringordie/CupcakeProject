@@ -5,7 +5,6 @@ public class Topping {
     
     private final int id;
     private final String name;
-    private String type = "Topping";
     private final double price;
     
     
@@ -13,7 +12,6 @@ public class Topping {
         this.name = name;
         this.price = price;
         this.id = id;
-        this.type = type;
     }
 
     public int getId() {
