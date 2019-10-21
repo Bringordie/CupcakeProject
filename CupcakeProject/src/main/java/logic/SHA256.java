@@ -11,7 +11,7 @@ public class SHA256 {
     
     /**
      * @author Bringordie - Frederik Braagaard
-     * @return returns HexBinary SHA-256 incryption of an password used for
+     * @return returns HexBinary SHA-256 encryption of an password used for
      * adding password to the DB but also used for login to check match.
     */
     public static String getHash(byte[] inputBytes) {
