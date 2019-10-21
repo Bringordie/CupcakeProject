@@ -4,9 +4,13 @@
     Author     : 
 --%>
 
+<%@page import="logic.CupCake"%>
+<%@page import="logic.LineItems"%>
+<%@page import="logic.User"%>
 <%@page import="logic.Topping"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="logic.Bottom"%>
+<%@page import="logic.Shoppingcart"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -23,6 +27,7 @@
                     <tr>
                         <td>Name</td>
                         <td>Price</td>
+                        <td>Select item</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,42 +36,42 @@
                     <tr bgcolor = "#949494">
                         <td><%=bottoms.getName()%></td>
                         <td><%=bottoms.getPrice()%></td>
-                        <td><input type="checkbox" name=id value="<%=bottoms.getId()%>"</td> 
+                        <td> <input type="radio" name="id" value="<%=bottoms.getId()%>" /></td>
 
                     </tr>
                     <% } //end loop %>
                 </tbody>
 
             </table>  
+        </form>
 
 
-            <h1 align="center">Toppings:</h1>
-            <%--<form action="FrontController" method="POST" align="center"> --%>
-                <table width = "50%" border = "1" align = "center">
-                    <thead>
-                        <tr>
-                            <td>Name</td>
-                            <td>Price</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% ArrayList<Topping> topping = (ArrayList<Topping>) session.getAttribute("toppings");
+        <h1 align="center">Toppings:</h1>
+        <form action="FrontController" method="POST" align="center"> 
+            <table width = "50%" border = "1" align = "center"> 
+                <thead>
+                    <tr>
+                        <td>Name</td>
+                        <td>Price</td>
+                        <td>Select item</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% ArrayList<Topping> topping = (ArrayList<Topping>) session.getAttribute("toppings"); 
                         for (Topping toppings : topping) {%>                    
-                        <tr bgcolor = "#949494">
-                            <td><%=toppings.getName()%></td>
-                            <td><%=toppings.getPrice()%></td>
-                            <td><input type="checkbox" name=id value="<%=toppings.getId()%>"</td> 
+                    <tr bgcolor = "#949494">
+                        <td><%=toppings.getName()%></td>
+                        <td><%=toppings.getPrice()%></td>
+                        <td> <input type="radio" name="id" value="<%=toppings.getId()%>" /></td>                          
+                    </tr>
+                    <% } //end loop %>
+                </tbody>
+            </table>
 
-                        </tr>
-                        <% } //end loop %>
-                    </tbody>
-                    </table>
-                    
-                    
-                    <input type="hidden" name="cmd" value="payment" />
-                    <input type="submit" value="Process order" />
-            </form>
 
+            <input type="hidden" name="cmd" value="payment" />
+            <input type="submit" value="Process order" />
+        </form>
     </body>
 
 </html>

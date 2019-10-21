@@ -48,7 +48,7 @@ public class FrontController extends HttpServlet {
 
     /**
      * @author Bringordie - Frederik Braagaard
-    */
+     */
     public void userRegistration(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         String username = request.getParameter("username");
@@ -56,22 +56,22 @@ public class FrontController extends HttpServlet {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String encrypt = SHA256.getHash(password.getBytes());
-        
-         Boolean usernameDB = CupCakeMapper.checkUsername(username);
-         
-         if (usernameDB == false){
-             CupCakeMapper.reqisterUser(username, encrypt, name, email);
+
+        Boolean usernameDB = CupCakeMapper.checkUsername(username);
+
+        if (usernameDB == false) {
+            CupCakeMapper.reqisterUser(username, encrypt, name, email);
             RequestDispatcher rd = request.getRequestDispatcher("WEB-INF\\CustomerPage.jsp");
             rd.forward(request, response);
-         } else {
+        } else {
             RequestDispatcher rd = request.getRequestDispatcher("RegistrationError.jsp");
             rd.forward(request, response);
-         }
+        }
     }
 
     /**
      * @author Bringordie - Frederik Braagaard
-    */
+     */
     public void userLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         String username = request.getParameter("usernamelogin");
@@ -79,13 +79,12 @@ public class FrontController extends HttpServlet {
         Boolean usernameDB = CupCakeMapper.checkUsername(username);
         Boolean passwordDB = CupCakeMapper.checkPassword(username, password);
         Boolean getRole = CupCakeMapper.checkRole(username);
-        
+
         User saveUsername = new User();
         saveUsername.setUsername(username);
         //User user = new User("","","","");
         //user.setUsername(username);
-        
-        
+
         if (usernameDB && passwordDB == true && getRole == true) {
             RequestDispatcher rd = request.getRequestDispatcher("WEB-INF\\AdminPage.jsp");
             rd.forward(request, response);
@@ -102,7 +101,7 @@ public class FrontController extends HttpServlet {
 
     /**
      * @author Bringordie - Frederik Braagaard
-    */
+     */
     public void goToUserRegistration(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         RequestDispatcher rd = request.getRequestDispatcher("Registration.jsp");
@@ -111,44 +110,44 @@ public class FrontController extends HttpServlet {
 
     /**
      * @author Bringordie - Frederik Braagaard
-    */
+     */
     public void goToLoginUser(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
         rd.forward(request, response);
     }
-    
+
     /**
      * @author Bringordie - Frederik Braagaard
-    */
+     */
     public void goToProducts(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         ArrayList<Bottom> bottoms = CupCakeMapper.getBottoms();
         request.getSession().setAttribute("bottoms", bottoms);
-        
+
         ArrayList<Topping> toppings = CupCakeMapper.getToppings();
         request.getSession().setAttribute("toppings", toppings);
-        
+
         RequestDispatcher rd = request.getRequestDispatcher("WEB-INF\\Products.jsp");
         rd.forward(request, response);
     }
-    
+
     /**
      * @author Bringordie - Frederik Braagaard
-    */
+     */
     public void addBalance(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         double balanceToAdd = Double.parseDouble(request.getParameter("AddBalance"));
-        
+
         User getUsername = new User();
         String username4 = (String) getUsername.getUsername();
         CupCakeMapper.updateBalance(username4, balanceToAdd);
-        
+
         RequestDispatcher rd = request.getRequestDispatcher("WEB-INF\\CustomerPage.jsp");
         rd.forward(request, response);
     }
-
     
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
