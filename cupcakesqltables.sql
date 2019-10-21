@@ -1,3 +1,4 @@
+DROP TABLE if exists lineitems;
 DROP TABLE if exists completeorders;
 DROP TABLE if exists users;
 DROP TABLE if exists toppings;
@@ -36,6 +37,17 @@ CREATE TABLE bottoms (
     bottomName VARCHAR(45),
     Price DOUBLE,
     primary key (idBottoms)
+);
+
+CREATE TABLE lineitems (
+	OrdreNumber INTEGER,
+	idBottoms INTEGER,
+    idToppings INTEGER,
+    idUsers INTEGER,
+    Price DOUBLE,
+    FOREIGN KEY (idUsers) REFERENCES users(idUsers),
+    FOREIGN KEY (idBottoms) REFERENCES bottoms(idBottoms),
+    FOREIGN KEY (idToppings) REFERENCES toppings(idToppings)
 );
 
 insert into bottoms (bottomName, Price) values ("Chocolate", 5.00);
