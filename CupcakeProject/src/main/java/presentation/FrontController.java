@@ -1,7 +1,6 @@
 package presentation;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -83,6 +82,8 @@ public class FrontController extends HttpServlet {
         
         User saveUsername = new User();
         saveUsername.setUsername(username);
+        //User user = new User("","","","");
+        //user.setUsername(username);
         
         
         if (usernameDB && passwordDB == true && getRole == true) {

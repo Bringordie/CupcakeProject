@@ -20,9 +20,6 @@ public class User {
 //       this.name = name;
 //    }
 
-//    public User() {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
 
     public void setUsername(String username) {
         this.username = username;

@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import logic.Bottom;
 import logic.SHA256;
 import logic.Topping;
-import logic.User;
 import static persistence.DBConnection.getConnection;
 
 public class CupCakeMapper {
