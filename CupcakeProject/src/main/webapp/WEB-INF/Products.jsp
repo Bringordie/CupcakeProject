@@ -31,23 +31,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% ArrayList<Bottom> bottom = (ArrayList<Bottom>) session.getAttribute("bottoms");
+                    <% 
+                        ArrayList<Bottom> bottom = (ArrayList<Bottom>) session.getAttribute("bottoms");
+                    //Unsure if needed ->
+                    session.setAttribute("ubottom", bottom);
                         for (Bottom bottoms : bottom) {%>                    
                     <tr bgcolor = "#949494">
                         <td><%=bottoms.getName()%></td>
                         <td><%=bottoms.getPrice()%></td>
-                        <td> <input type="radio" name="id" value="<%=bottoms.getId()%>" /></td>
+                        <td> <input type="radio" name="idbottom" value="<%=bottoms.getId()%>" /></td>
 
                     </tr>
                     <% } //end loop %>
                 </tbody>
 
             </table>  
-        </form>
+
 
 
         <h1 align="center">Toppings:</h1>
-        <form action="FrontController" method="POST" align="center"> 
             <table width = "50%" border = "1" align = "center"> 
                 <thead>
                     <tr>
@@ -57,12 +59,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% ArrayList<Topping> topping = (ArrayList<Topping>) session.getAttribute("toppings"); 
+                    <% 
+                        ArrayList<Topping> topping = (ArrayList<Topping>) session.getAttribute("toppings"); 
+                        //Unsure if needed ->
+                    session.setAttribute("utopping", topping);
                         for (Topping toppings : topping) {%>                    
                     <tr bgcolor = "#949494">
                         <td><%=toppings.getName()%></td>
                         <td><%=toppings.getPrice()%></td>
-                        <td> <input type="radio" name="id" value="<%=toppings.getId()%>" /></td>                          
+                        <td> <input type="radio" name="idtopping" value="<%=toppings.getId()%>" /></td>                          
                     </tr>
                     <% } //end loop %>
                 </tbody>

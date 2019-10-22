@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import logic.Bottom;
+import logic.CupCake;
 import logic.SHA256;
+import logic.Shoppingcart;
 import logic.Topping;
 import logic.User;
 import persistence.CupCakeMapper;
@@ -41,6 +43,9 @@ public class FrontController extends HttpServlet {
             case "addBalance":
                 addBalance(request, response);
                 break;
+            case "payment":
+                addCupCakeToShoppingCart(request, response);
+                break;
             default:
                 break;
         }
@@ -55,12 +60,11 @@ public class FrontController extends HttpServlet {
         String password = request.getParameter("password");
         String name = request.getParameter("name");
         String email = request.getParameter("email");
-        String encrypt = SHA256.getHash(password.getBytes());
 
         Boolean usernameDB = CupCakeMapper.checkUsername(username);
 
         if (usernameDB == false) {
-            CupCakeMapper.reqisterUser(username, encrypt, name, email);
+            CupCakeMapper.reqisterUser(username, password, name, email);
             RequestDispatcher rd = request.getRequestDispatcher("WEB-INF\\CustomerPage.jsp");
             rd.forward(request, response);
         } else {
@@ -146,7 +150,70 @@ public class FrontController extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("WEB-INF\\CustomerPage.jsp");
         rd.forward(request, response);
     }
+
     
+    //Works 99%. TODO. See/Fix how to grab the total ammount correct, somehow only one of them holds the total?
+    public void addCupCakeToShoppingCart(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException, ClassNotFoundException {
+        Topping toppingsnull = null;
+        Bottom bottomsnull = null;
+        
+        String[] choicesbottom = request.getParameterValues("idbottom");
+        String[] choicestopping = request.getParameterValues("idtopping");
+       
+        ArrayList<Topping> toppings =  CupCakeMapper.getToppings();
+        ArrayList<Bottom> bottoms =  CupCakeMapper.getBottoms();
+
+        //ArrayList<Topping> choosenTopping = new ArrayList();
+        //ArrayList<Bottom> choosenBottom = new ArrayList();
+        int toppingchoice = 0;
+        int bottomchoice = 0;
+        double toppingprice = 0;
+        double bottomprice = 0;
+        String toppingname = "";
+        String bottomname = "";
+
+        //Checking what toppings was selected
+        if (choicestopping != null) {
+            for (int i = 0; i < choicestopping.length; ++i) {
+                int id = Integer.parseInt(choicestopping[i]);
+                for (int j = 0; j < toppings.size(); ++j) {
+                    toppingsnull = toppings.get(j);
+
+                    if (toppingsnull.getId() == id) {
+                        //choosenTopping.add(toppingsnull);
+                        bottomprice += toppingsnull.getPrice();
+                        toppingchoice = toppingsnull.getId();
+                        toppingname = toppingsnull.getName();
+                    }
+                }
+            }
+            
+            //Checking what bottoms was selected
+            for (int i = 0; i < choicesbottom.length; ++i) {
+                int id = Integer.parseInt(choicesbottom[i]);
+                for (int j = 0; j < bottoms.size(); ++j) {
+                    bottomsnull = bottoms.get(j);
+
+                    if (bottomsnull.getId() == id) {
+                        //choosenBottom.add(bottomsnull);
+                        bottomprice += bottomsnull.getPrice();
+                        bottomchoice = bottomsnull.getId();
+                        bottomname = bottomsnull.getName();
+                    }
+                }
+            }
+            double sum = toppingprice + bottomprice;
+            Shoppingcart.setTotalprice((Math.round(sum * 100) / 100.0));
+            Topping toppingadded = new Topping(toppingname, toppingprice, toppingchoice);
+            Bottom bottomadded = new Bottom(bottomname, bottomprice, bottomchoice);
+            CupCake cupcake = new CupCake(toppingadded, bottomadded, Shoppingcart.getTotalprice());
+
+            RequestDispatcher rd = request.getRequestDispatcher("WEB-INF\\InvoiceDetails.jsp");
+            rd.forward(request, response);
+        }
+
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

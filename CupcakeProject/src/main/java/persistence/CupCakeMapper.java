@@ -21,11 +21,12 @@ public class CupCakeMapper {
     public static void reqisterUser(String username, String password, String name, String email) throws SQLException, ClassNotFoundException {
 
         String sql = "INSERT INTO users(Username, Password, Role, Name, Email)VALUES(?,?,?,?,?)";
+        String encrypt = SHA256.getHash(password.getBytes());
 
         try {
             PreparedStatement statement = getConnection().prepareStatement(sql);
             statement.setString(1, username);
-            statement.setString(2, password);
+            statement.setString(2, encrypt);
             statement.setBoolean(3, false);
             statement.setString(4, name);
             statement.setString(5, email);
