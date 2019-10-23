@@ -84,6 +84,22 @@ public class DBdatatest {
         assertFalse(incorrectpassword2);
 }
     
+    @Test
+    public void DBCheckRoleOfNewlyCreatedUser() throws SQLException, ClassNotFoundException {
+        //Clean up should be placed correct places where it's needed in end.
+        CupCakeMapperDemo.droptable();
+        CupCakeMapperDemo.createtable();
+        
+        
+        CupCakeMapperDemo.reqisterUser("CPHtest", "encrypted", "Testperson", "test@email.org");
+        
+        boolean expected = false;
+        boolean actually = CupCakeMapperDemo.checkRole("CPHtest");
+        
+        assertEquals(expected, actually);
+        
+    }
+    
 
     @Test
     public void DBCeckToppingandBottomAmmount() throws SQLException, ClassNotFoundException {
@@ -124,5 +140,25 @@ public class DBdatatest {
         assertEquals(expectedbottom, getnamebottom);
     }
     
+    @Test
+    public void DBCheckBalanceUpdated() throws SQLException, ClassNotFoundException {
+        CupCakeMapperDemo.droptable();
+        CupCakeMapperDemo.createtable();
+        
+        
+        CupCakeMapperDemo.reqisterUser("CPHtest", "encrypted", "Testperson", "test@email.org");
+        
+        double expected = 0;
+        double actually = CupCakeMapperDemo.getBalance("CPHtest");
+        
+        assertEquals(expected, actually, 0.001);
+        
+        CupCakeMapperDemo.updateBalance("CPHtest", 5000);
+        
+        double expectednow = 5000;
+        double actuallynow = CupCakeMapperDemo.getBalance("CPHtest");
+        
+        assertEquals(expected, actually, 0.001);
+    }
     
     }
