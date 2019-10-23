@@ -91,7 +91,7 @@ public class CupCakeMapperDemo {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CupCakeMapperDemo.class.getName()).log(Level.SEVERE, null, ex);
         }
         return passwordBoolean;
     }

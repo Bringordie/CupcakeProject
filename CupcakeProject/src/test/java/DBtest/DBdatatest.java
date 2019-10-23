@@ -1,4 +1,4 @@
-package DBtest1;
+package DBtest;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -39,7 +39,7 @@ public class DBdatatest {
         
     }
     
-    
+
     @Test
     public void DBMultipleCreations() throws SQLException, ClassNotFoundException {
         //Clean up should be placed correct places where it's needed in end.
@@ -60,7 +60,7 @@ public class DBdatatest {
     
     }
     
-    
+
     @Test
     public void DBTestPasswordIsEncrypted() throws SQLException, ClassNotFoundException {
         //Clean up should be placed correct places where it's needed in end.
@@ -69,26 +69,22 @@ public class DBdatatest {
     
         CupCakeMapperDemo.reqisterUser("CPHtestencryption", "encrypted", "Testperson", "test@email.org");
         
-        //Should work but doesn't will invitage another time
-        //boolean callbackofpassword = CupCakeMapperDemo.checkPassword("CPHtestencryption", "encrypted");
+        Boolean callbackofpassword = CupCakeMapperDemo.checkPassword("CPHtestencryption", "encrypted");
+        Boolean incorrectpassword = CupCakeMapperDemo.checkPassword("CPHtestencryption", "123");
         
-        //Works for now.
-        Boolean callbackofpassword = CupCakeMapper.checkPassword("CPHtestencryption", "encrypted");
-        
-        assertFalse(callbackofpassword);
+        assertTrue(callbackofpassword);
+        assertFalse(incorrectpassword);
         
         CupCakeMapperDemo.reqisterUser("CPHtestencryption2", "stillencrypted", "Testperson", "test@email.org");
         
-        //Should work but doesn't will invitage another time
-        //Boolean callbackofpassword2 = CupCakeMapperDemo.checkPassword("CPHtestencryption2", "stillencrypted");
+        Boolean callbackofpassword2 = CupCakeMapperDemo.checkPassword("CPHtestencryption2", "stillencrypted");
+        Boolean incorrectpassword2 = CupCakeMapperDemo.checkPassword("CPHtestencryption", "hello");
         
-        //Works for now.
-        Boolean callbackofpassword2 = CupCakeMapper.checkPassword("CPHtestencryption", "encrypted");
-        
-        assertFalse(callbackofpassword2);
+        assertTrue(callbackofpassword2);
+        assertFalse(incorrectpassword2);
 }
     
-    
+
     @Test
     public void DBCeckToppingandBottomAmmount() throws SQLException, ClassNotFoundException {
         ArrayList<Bottom> bottomtest = CupCakeMapperDemo.getBottoms();
@@ -106,6 +102,7 @@ public class DBdatatest {
         assertEquals(expectedbottom, actuallybottom);
     }
     
+
     @Test
     public void DBCheckPositionOfName() throws SQLException, ClassNotFoundException {
         ArrayList<Bottom> bottomtest = CupCakeMapperDemo.getBottoms();
