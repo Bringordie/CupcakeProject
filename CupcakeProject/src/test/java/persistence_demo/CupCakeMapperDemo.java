@@ -15,8 +15,6 @@ import logic.Topping;
 import static persistence.DBConnection.getConnection;
 import static persistence_demo.DBDemo.getConnection;
 
-
-
 public class CupCakeMapperDemo {
 
     /**
@@ -182,7 +180,7 @@ public class CupCakeMapperDemo {
             System.out.println(e);
         }
     }
-    
+
     /**
      * @author Bringordie - Frederik Braagaard
      */
@@ -201,15 +199,17 @@ public class CupCakeMapperDemo {
         }
         return balancesum;
     }
-    
-    
-        //Drops as a start 3 tables (as they have relation).
-        public static void droptable() throws SQLException, ClassNotFoundException {
+
+    /**
+     * @author Bringordie - Frederik Braagaard
+     */
+    //Drops as a start 3 tables (as they have relation).
+    public static void droptable() throws SQLException, ClassNotFoundException {
 
         String sql = "DROP TABLE if exists lineitems;";
         String sql1 = "DROP TABLE if exists completeorders;";
-        String sql2 = "DROP TABLE if exists users;";  
-        
+        String sql2 = "DROP TABLE if exists users;";
+
         try {
             PreparedStatement statement = DBDemo.getConnection().prepareStatement(sql);
             PreparedStatement statement1 = DBDemo.getConnection().prepareStatement(sql1);
@@ -221,42 +221,45 @@ public class CupCakeMapperDemo {
             System.out.println(e);
         }
     }
-    
-        //Re-creates the 3 drops above
+
+    /**
+     * @author Bringordie - Frederik Braagaard
+     */
+    //Re-creates the 3 drops above
     public static void createtable() throws SQLException, ClassNotFoundException {
-        String users = "CREATE TABLE users (" +
-"    idUsers INTEGER not null AUTO_INCREMENT unique," +
-"    Username VARCHAR(45) unique not null," +
-"    Password VARCHAR(200) not null," +
-"    Balance DOUBLE not null DEFAULT 0," +
-"    Name VARCHAR(45)," +
-"    Email VARCHAR(45)," +
-"    Role tinyint," +
-"    primary key (idUsers)" +
-");";
-        
-         String completeorders = "CREATE TABLE completeorders (" +
-"	Ordernumber INTEGER not null AUTO_INCREMENT unique," +
-"    idUsers INTEGER," +
-"    OrderDate TIMESTAMP not null," +
-"    Total_price DOUBLE," +
-"    primary key (ordernumber)," +
-"    FOREIGN KEY (idUsers) REFERENCES users(idUsers)" +
-");";
-         
-         String lineitems = "CREATE TABLE lineitems (" +
-"	OrdreNumber INTEGER," +
-"	idBottoms INTEGER," +
-"    idToppings INTEGER," +
-"    quantity INTEGER," +
-"    idUsers INTEGER," +
-"    Price DOUBLE," +
-"    FOREIGN KEY (idUsers) REFERENCES users(idUsers)," +
-"    FOREIGN KEY (idBottoms) REFERENCES bottoms(idBottoms)," +
-"    FOREIGN KEY (idToppings) REFERENCES toppings(idToppings)" +
-");";
-         
-         try {
+        String users = "CREATE TABLE users ("
+                + "    idUsers INTEGER not null AUTO_INCREMENT unique,"
+                + "    Username VARCHAR(45) unique not null,"
+                + "    Password VARCHAR(200) not null,"
+                + "    Balance DOUBLE not null DEFAULT 0,"
+                + "    Name VARCHAR(45),"
+                + "    Email VARCHAR(45),"
+                + "    Role tinyint,"
+                + "    primary key (idUsers)"
+                + ");";
+
+        String completeorders = "CREATE TABLE completeorders ("
+                + "	Ordernumber INTEGER not null AUTO_INCREMENT unique,"
+                + "    idUser INTEGER,"
+                + "    OrderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null,"
+                + "    Total_price DOUBLE,"
+                + "    primary key (ordernumber),"
+                + "    FOREIGN KEY (idUser) REFERENCES users(idUsers)"
+                + ");";
+
+        String lineitems = "CREATE TABLE lineitems ("
+                + "	OrdreNumber INTEGER,"
+                + "	idBottom INTEGER,"
+                + "    idTopping INTEGER,"
+                + "    quantity INTEGER,"
+                + "    idUser INTEGER,"
+                + "    Price DOUBLE,"
+                + "    FOREIGN KEY (idUser) REFERENCES users(idUsers),"
+                + "    FOREIGN KEY (idBottom) REFERENCES bottoms(idBottoms),"
+                + "    FOREIGN KEY (idTopping) REFERENCES toppings(idToppings)"
+                + ");";
+
+        try {
             PreparedStatement statement = DBDemo.getConnection().prepareStatement(users);
             PreparedStatement statement1 = DBDemo.getConnection().prepareStatement(completeorders);
             PreparedStatement statement2 = DBDemo.getConnection().prepareStatement(lineitems);
@@ -266,9 +269,12 @@ public class CupCakeMapperDemo {
         } catch (SQLException e) {
             System.out.println(e);
         }
-        
+
     }
-    
+
+    /**
+     * @author Bringordie - Frederik Braagaard
+     */
     public static int checkHowManyUsersExists() throws ClassNotFoundException, SQLException {
         String sql = "select count(username) from users;";
         int countTotal = 0;
@@ -282,5 +288,60 @@ public class CupCakeMapperDemo {
             System.err.println("SQException Error");
         }
         return countTotal;
+    }
+    
+    /**
+     * @author Bringordie - Frederik Braagaard
+     */
+    public static int getLatestOrderNumber() throws SQLException, ClassNotFoundException {
+
+        String sql = "select count(Ordernumber) from completeorders";
+        ResultSet result = DBDemo.getConnection().prepareStatement(sql).executeQuery();
+        int latestOrderNumber = 0;
+        try {
+            while (result.next()) {
+                latestOrderNumber = result.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return latestOrderNumber;
+    }
+
+    /**
+     * @author Bringordie - Frederik Braagaard
+     */
+    // To do: finalize later
+    public static void createCompletedOrder(int userid, double totalprice) throws SQLException, ClassNotFoundException {
+
+        String sql = "INSERT INTO completeorders(idUser, Total_price)VALUES(?,?)";
+
+        try {
+            PreparedStatement statement = DBDemo.getConnection().prepareStatement(sql);
+            statement.setInt(1, userid);
+            statement.setDouble(2, totalprice);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+
+    /**
+     * @author Bringordie - Frederik Braagaard
+     */
+    public static String getNameOfUser(String username) throws SQLException, ClassNotFoundException {
+
+        String sql = "select Name from users where Username = '" + username + "'";
+        ResultSet result = DBDemo.getConnection().prepareStatement(sql).executeQuery();
+        String name = "";
+        try {
+            while (result.next()) {
+                name = result.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return name;
     }
 }

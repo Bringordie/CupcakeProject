@@ -161,4 +161,49 @@ public class DBdatatest {
         assertEquals(expected, actually, 0.001);
     }
     
+    @Test
+    public void DBGetLatestOrderNumber() throws SQLException, ClassNotFoundException {
+        CupCakeMapperDemo.droptable();
+        CupCakeMapperDemo.createtable();
+        
+        //Created a user so that we have a user with an id.
+        CupCakeMapperDemo.reqisterUser("Testuser", "password", "name", "email");
+        
+        //Create an finalized order
+        CupCakeMapperDemo.createCompletedOrder(1, 750);
+        
+        int expected = 1;
+        int actually = CupCakeMapperDemo.getLatestOrderNumber();
+        
+        assertEquals(expected, actually);
+        
+        //Create 4 more finalized order
+        CupCakeMapperDemo.createCompletedOrder(1, 750);
+        CupCakeMapperDemo.createCompletedOrder(1, 750);
+        CupCakeMapperDemo.createCompletedOrder(1, 750);
+        CupCakeMapperDemo.createCompletedOrder(1, 750);
+        
+        int expectednow = 5;
+        int actuallynow = CupCakeMapperDemo.getLatestOrderNumber();
+        
+        assertEquals(expectednow, actuallynow);
+        
+    }
+    
+    @Test
+    public void DBGetName() throws SQLException, ClassNotFoundException {
+        CupCakeMapperDemo.droptable();
+        CupCakeMapperDemo.createtable();
+        
+        //Created a user so that we have a user.
+        CupCakeMapperDemo.reqisterUser("Testuser", "password", "name", "email");
+        
+        
+        String expected = "name";
+        //Checking name in DB.
+        String actually = CupCakeMapperDemo.getNameOfUser("Testuser");
+        
+        assertEquals(expected, actually);
+    }
+    
     }
