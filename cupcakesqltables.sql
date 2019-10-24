@@ -18,11 +18,11 @@ CREATE TABLE users (
 
 CREATE TABLE completeorders (
 	Ordernumber INTEGER not null AUTO_INCREMENT unique,
-    idUsers INTEGER,
-    OrderDate TIMESTAMP not null,
+    idUser INTEGER,
+    OrderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null,
     Total_price DOUBLE,
     primary key (ordernumber),
-    FOREIGN KEY (idUsers) REFERENCES users(idUsers)
+    FOREIGN KEY (idUser) REFERENCES users(idUsers)
 );
 
 CREATE TABLE toppings (
@@ -41,13 +41,14 @@ CREATE TABLE bottoms (
 
 CREATE TABLE lineitems (
 	OrdreNumber INTEGER,
-	idBottoms INTEGER,
-    idToppings INTEGER,
-    idUsers INTEGER,
+	idBottom INTEGER,
+    idTopping INTEGER,
+    quantity INTEGER,
+    idUser INTEGER,
     Price DOUBLE,
-    FOREIGN KEY (idUsers) REFERENCES users(idUsers),
-    FOREIGN KEY (idBottoms) REFERENCES bottoms(idBottoms),
-    FOREIGN KEY (idToppings) REFERENCES toppings(idToppings)
+    FOREIGN KEY (idUser) REFERENCES users(idUsers),
+    FOREIGN KEY (idBottom) REFERENCES bottoms(idBottoms),
+    FOREIGN KEY (idTopping) REFERENCES toppings(idToppings)
 );
 
 insert into bottoms (bottomName, Price) values ("Chocolate", 5.00);
