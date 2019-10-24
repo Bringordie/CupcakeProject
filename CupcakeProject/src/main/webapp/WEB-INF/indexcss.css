@@ -1,0 +1,36 @@
+.flex {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+a img {
+    border: none;
+}
+img {
+    display: inline-block;
+    vertical-align: middle;
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+#logotype {
+    text-align: center;
+    width: inherit;
+    height: auto;
+    position: static;
+    top: 20px;
+    margin: 0px auto;
+    max-width: 70%;
+}
+
+#logotype {
+    text-align: center;
+    width: inherit;
+    height: auto;
+    position: static;
+    top: 20px;
+    margin: 0px auto;
+    max-width: 70%;
+}
