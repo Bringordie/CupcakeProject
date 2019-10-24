@@ -24,6 +24,12 @@ public class goToProducts extends Command {
 
         ArrayList<Topping> toppings = CupCakeMapper.getToppings();
         request.getSession().setAttribute("toppings", toppings);
+        
+        logic.User user = new logic.User();
+        String getUsername = user.getUsername();
+        
+        double usersBalance = CupCakeMapper.getBalance(getUsername);
+        request.getSession().setAttribute("usersBalance", usersBalance);
 
         String webpage = "Products";
         return webpage;

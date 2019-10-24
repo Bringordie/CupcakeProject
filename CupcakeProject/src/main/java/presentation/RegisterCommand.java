@@ -27,6 +27,7 @@ public class RegisterCommand extends Command {
 
         if (usernameDB == false) {
             CupCakeMapper.reqisterUser(username, password, name, email);
+            request.getSession().setAttribute("userloggedinname", name);
             WebPage = "CustomerPage";
             return WebPage;
         } else {

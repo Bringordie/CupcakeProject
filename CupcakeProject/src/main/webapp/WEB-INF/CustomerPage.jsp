@@ -12,7 +12,7 @@
         <title>CustomerPage Page</title>
     </head>
     <body>
-    <h1>Hello Customer</h1>
+    <h1>Welcome <% out.println(session.getAttribute("userloggedinname")); %></h1>
     
     <form action="FrontController" >
                 <input type="hidden" name="cmd" value="goToProducts" />

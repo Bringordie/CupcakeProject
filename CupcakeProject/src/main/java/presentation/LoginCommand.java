@@ -31,6 +31,9 @@ public class LoginCommand extends Command {
         if (usernameDB && passwordDB == true && getRole == true) {
             WebPage = "AdminPage";
         } else if (usernameDB && passwordDB == true && getRole == false) {
+            String getUsername = CupCakeMapper.getNameOfUser(username);
+            
+        request.getSession().setAttribute("userloggedinname", getUsername);
             WebPage = "CustomerPage";
         } else {
             //Wrong password or username

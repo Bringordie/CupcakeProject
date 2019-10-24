@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import logic.Bottom;
+import logic.LineItems;
 import logic.SHA256;
 import logic.Topping;
 import static persistence.DBConnection.getConnection;
@@ -177,7 +178,7 @@ public class CupCakeMapper {
             System.out.println(e);
         }
     }
-    
+       
     /**
      * @author Bringordie - Frederik Braagaard
      */
@@ -196,4 +197,68 @@ public class CupCakeMapper {
         }
         return balancesum;
     }
+    
+        public static int getLatestOrderNumber() throws SQLException, ClassNotFoundException {
+        
+        String sql = "select count(Ordernumber) from completeorders";
+        ResultSet result = getConnection().prepareStatement(sql).executeQuery();
+        int latestOrderNumber = 0;
+        try {
+            while (result.next()) {
+                latestOrderNumber = result.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return latestOrderNumber;
+        }
+        
+        // To do: finalize later
+        public static void createCompletedOrder(int idUser, double totalprice) throws SQLException, ClassNotFoundException {
+            
+        String sql = "INSERT INTO completeorders(idUser, Total_price)VALUES(?,?)";
+
+        try {
+            PreparedStatement statement = getConnection().prepareStatement(sql);
+            statement.setInt(1, idUser);
+            statement.setDouble(2, totalprice);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        }
+        
+        
+        // To do logic is missing in the classes to complete this.
+        public static void createLineItems(ArrayList<LineItems> lineitems) throws SQLException, ClassNotFoundException {
+            
+        int createOrderNumber = getLatestOrderNumber() +1;
+        
+        String sql = "INSERT INTO lineitems(idBottom, idTopping, quantity, idUser, Price)VALUES(?,?,?,?,?)";
+        ResultSet result = getConnection().prepareStatement(sql).executeQuery();
+        int latestOrderNumber = 0;
+        
+        for (LineItems lineitem : lineitems) {
+
+        }
+        
+        }
+        
+        public static String getNameOfUser(String username) throws SQLException, ClassNotFoundException {
+            
+            String sql = "select Name from users where Username = '"+username+"'";
+            ResultSet result = getConnection().prepareStatement(sql).executeQuery();
+            String name = "";
+            try {
+            while (result.next()) {
+                name = result.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return name;
+        }
+       
+
+
 }
