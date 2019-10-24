@@ -4,17 +4,13 @@
     display: flex;
 }
 
-a img {
-    border: none;
-}
 img {
     display: inline-block;
     vertical-align: middle;
-}
-img {
     max-width: 100%;
     height: auto;
 }
+
 #logotype {
     text-align: center;
     width: inherit;
@@ -33,4 +29,12 @@ img {
     top: 20px;
     margin: 0px auto;
     max-width: 70%;
+}
+
+.row.header {
+    background-color: #4E6754;
+}
+
+input[type=submit] {
+    width: 20em;  height: 2em;
 }
