@@ -52,7 +52,7 @@ CupcakeProject/src/main/java/logic/db.properties
 CupcakeProject/src/main/java/persistence/DBConnection.java
 CupcakeProject/src/test/java/persistence_demo/DBDemo.java
 CupcakeProject/src/test/java/logic/db.properties
-CupcakeProject\CupcakeProject\src\main\resources\db.properties
+CupcakeProject/src/main/resources/db.properties
 
 ### Windows ###
 # Windows thumbnail cache files
