@@ -1,7 +1,9 @@
 package presentation;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -15,6 +17,13 @@ public class FrontController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
+        InputStream sa = FrontController.class.getResourceAsStream("/db.properties");
+                  
+                    Properties properties = new Properties();
+                    properties.load(sa);
+                    String password = properties.getProperty("password");
+                    String user = properties.getProperty("user");
+                    String url = properties.getProperty("url");
         try {
             Command cmd = Command.from(request);
             String view = cmd.execute(request, response);

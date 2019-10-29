@@ -5,7 +5,6 @@ package logic;
  */
 public class CupCake {
 
-
     private Bottom bottom;
     private Topping topping;
     double price;
@@ -17,8 +16,8 @@ public class CupCake {
         this.topping = topping;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Bottom: "+bottom.getName()+" + "+"Topping: "+topping.getName()+" Price: "+bottom.getPrice()+topping.getPrice();
-//    }
+    @Override
+    public String toString() {
+        return "Bottom: "+bottom.getName()+" + "+"Topping: "+topping.getName()+" Price: "+(topping.getPrice()+bottom.getPrice());
+    }
 }

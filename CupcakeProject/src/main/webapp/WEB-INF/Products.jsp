@@ -22,7 +22,7 @@
  
     <body>
         <p> Your balance <% out.println(String.format("%.0f", session.getAttribute("usersBalance"))+ " $"); %></p>
-        <h1 align="center">Bottoms:</h1>
+        <h1 align="center">Bottoms:</h1>            
         <form action="FrontController" method="POST" align="center">
             <table width = "50%" border = "1" align = "center">
                 <thead>
@@ -63,7 +63,11 @@
             </table>
                 <p>Quantity:      <input type="number" name="quantity" value="1" /></p>
             <input type="hidden" name="cmd" value="payment" />
-            <input type="submit" value="Process order" />
-        </form>
+            <input type="submit" value="Add cupcake" align="right" />
+            <form>
+        <form action="FrontController" >
+            <input type="hidden" name="cmd" value="processorder" />
+            <input type="submit" value="Process order" align="right"/>
+        </form>   
     </body>
 </html>

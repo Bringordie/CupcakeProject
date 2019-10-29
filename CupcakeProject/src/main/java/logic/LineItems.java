@@ -26,6 +26,11 @@ public class LineItems {
     public double getPrice() {
         return price;
     }
+
+    @Override
+    public String toString() {
+        return cupcake.toString() + "Quantity: " + getAmount();
+    }
     
     
     
