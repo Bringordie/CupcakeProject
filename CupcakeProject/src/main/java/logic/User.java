@@ -1,25 +1,20 @@
 package logic;
 
-
+/**
+ * @author Bringordie - Frederik Braagaard
+ */
 public class User {
-    
+
     private static String username;
     private String password;
     private double balance;
     private String email;
     private String name;
-    
-    /**
-     * @author Bringordie - Frederik Braagaard
-    */
-//    public User(String username, String password, String email, 
-//            String name) {
-//       this.username = username;
-//       this.password = password;
-//       this.email = email;
-//       this.name = name;
-//    }
+    private Shoppingcart shoppingcart;
 
+    public Shoppingcart getShoppingcart() {
+        return shoppingcart;
+    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -40,11 +35,9 @@ public class User {
     public String getName() {
         return name;
     }
-    
 
     public void setBalance(double balance) {
         this.balance = balance;
     }
-    
-    
+
 }

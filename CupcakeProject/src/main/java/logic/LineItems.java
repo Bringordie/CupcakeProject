@@ -1,25 +1,33 @@
 package logic;
 
-import java.util.ArrayList;
-
+/**
+ * @author Bringordie - Frederik Braagaard
+ */
 public class LineItems {
 
-    protected static ArrayList<CupCake> lineitems = new ArrayList();
     private CupCake cupcake;
+    private int amount;
+    private double price;
 
-    public void setCupCakeTempHolder(CupCake CupCakeOrderHolder) {
-        //CupCake.CupCakeOrderHolder = lineitems;
-        lineitems.add(CupCakeOrderHolder);
+    public LineItems(CupCake cupcake, int amount) {
+        this.cupcake = cupcake;
+        this.amount = amount;
+        this.price = cupcake.price * amount;
+    }
+    
+    public CupCake getCupcake() {
+        return cupcake;
     }
 
-    public static ArrayList<CupCake> getLineitems() {
-        return lineitems;
+    public int getAmount() {
+        return amount;
     }
 
-    LineItems(CupCake cupcake) {
-        lineitems.add(cupcake);
+    public double getPrice() {
+        return price;
     }
-
-
-
+    
+    
+    
+    
 }

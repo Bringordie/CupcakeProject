@@ -1,7 +1,7 @@
 <%-- 
     Document   : Login
     Created on : Oct 17, 2019, 1:57:44 PM
-    Author     : 
+    Author     : Bringordie - Frederik Braagaard
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

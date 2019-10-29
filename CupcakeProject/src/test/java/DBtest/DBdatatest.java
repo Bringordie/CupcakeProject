@@ -1,21 +1,12 @@
 package DBtest;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 import logic.Bottom;
 import logic.Topping;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.hamcrest.collection.IsEmptyCollection;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
-import persistence.CupCakeMapper;
 import persistence_demo.CupCakeMapperDemo;
 
 

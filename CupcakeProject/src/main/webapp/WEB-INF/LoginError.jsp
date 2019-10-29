@@ -1,7 +1,7 @@
 <%-- 
     Document   : LoginError.jsp
     Created on : 20-10-2019, 14:56:29
-    Author     : 
+    Author     : Bringordie - Frederik Braagaard
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

@@ -8,27 +8,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import logic.Bottom;
 import logic.Topping;
-import persistence.CupCakeMapper;
+
 
 /**
  *
  * @author Bringordie - Frederik Braagaard
  */
-public class goToProducts extends Command {
 
-    @Override
+public class GoToProductsCommand extends Command {
+
     String execute(HttpServletRequest request, HttpServletResponse response) 
         throws ServletException, IOException, SQLException, ClassNotFoundException{
-        ArrayList<Bottom> bottoms = CupCakeMapper.getBottoms();
+        ArrayList<Bottom> bottoms = db.getBottoms();
         request.getSession().setAttribute("bottoms", bottoms);
 
-        ArrayList<Topping> toppings = CupCakeMapper.getToppings();
+        ArrayList<Topping> toppings = db.getToppings();
         request.getSession().setAttribute("toppings", toppings);
         
         logic.User user = new logic.User();
         String getUsername = user.getUsername();
         
-        double usersBalance = CupCakeMapper.getBalance(getUsername);
+        double usersBalance = db.getBalance(getUsername);
         request.getSession().setAttribute("usersBalance", usersBalance);
 
         String webpage = "Products";

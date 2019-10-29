@@ -1,11 +1,16 @@
 package logic;
 
+import java.util.ArrayList;
 
+/**
+ * @author Bringordie - Frederik Braagaard
+ */
 public class Topping {
     
     private final int id;
     private final String name;
     private final double price;
+    private static ArrayList<Topping> topping = new ArrayList();
     
     
     public Topping (String name, double price, int id) {
@@ -24,6 +29,14 @@ public class Topping {
 
     public double getPrice() {
         return price;
+    }
+    
+    public static void setToppingsFromDB(ArrayList<Topping> toppings) {
+        Topping.topping = toppings;
+    }
+
+    public static ArrayList<Topping> getToppingsFromDB() {
+        return topping;
     }
     
     

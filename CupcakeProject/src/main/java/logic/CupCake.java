@@ -1,23 +1,24 @@
 package logic;
 
-import java.util.ArrayList;
-
-
+/**
+ * @author Bringordie - Frederik Braagaard
+ */
 public class CupCake {
 
-    static ArrayList<CupCake> CupCakeOrderHolder;
+
     private Bottom bottom;
     private Topping topping;
     double price;
+    int quantity;
     
-    public CupCake(Topping topping, Bottom bottom, double price) {
-        //CupCake cupcake = new CupCake(topping, bottom, price);
+    public CupCake(int toppingid, int bottomid) {
         this.bottom = bottom;
         this.price = price;
         this.topping = topping;
-        LineItems lineitems = new LineItems(this);
-        lineitems.setCupCakeTempHolder(this);
-        
     }
-    
+
+//    @Override
+//    public String toString() {
+//        return "Bottom: "+bottom.getName()+" + "+"Topping: "+topping.getName()+" Price: "+bottom.getPrice()+topping.getPrice();
+//    }
 }

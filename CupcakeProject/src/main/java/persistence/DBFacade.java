@@ -12,14 +12,14 @@ import logic.SHA256;
 import logic.Topping;
 import static persistence.DBConnection.getConnection;
 
-public class CupCakeMapper {
+public class DBFacade implements Facade{
 
     /**
      * @author Bringordie - Frederik Braagaard
      * @param username - Input from Registration.jsp
      * @param password - Input from Registration.jsp
      */
-    public static void reqisterUser(String username, String password, String name, String email) throws SQLException, ClassNotFoundException {
+    public void reqisterUser(String username, String password, String name, String email) throws SQLException, ClassNotFoundException {
 
         String sql = "INSERT INTO users(Username, Password, Role, Name, Email)VALUES(?,?,?,?,?)";
         String encrypt = SHA256.getHash(password.getBytes());
@@ -44,7 +44,7 @@ public class CupCakeMapper {
      * @return Method will return either true or false depending on the username
      * already existing in the DB.
      */
-    public static boolean checkUsername(String username) throws ClassNotFoundException, SQLException {
+    public boolean checkUsername(String username) throws ClassNotFoundException, SQLException {
         int countTotal = 0;
         boolean returnAnswer = true;
         String sql = "select count(username) from users where Username = '" + username + "'";
@@ -72,7 +72,7 @@ public class CupCakeMapper {
      * @return Method will return either true or false depending on if the
      * encrypted password matches the one in the DB.
      */
-    public static boolean checkPassword(String username, String password) throws ClassNotFoundException, SQLException {
+    public boolean checkPassword(String username, String password) throws ClassNotFoundException, SQLException {
         String hashPassword = SHA256.getHash(password.getBytes());
         Boolean passwordBoolean = false;
         String sql = "select Password from users where Username = '" + username + "'";
@@ -87,7 +87,7 @@ public class CupCakeMapper {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
         return passwordBoolean;
     }
@@ -99,7 +99,7 @@ public class CupCakeMapper {
      * used to see if they are a regular user or an admin. And where to navigate
      * them
      */
-    public static boolean checkRole(String username) throws ClassNotFoundException, SQLException {
+    public boolean checkRole(String username) throws ClassNotFoundException, SQLException {
         Boolean roleBoolean = false;
         String sql = "select Role from users where Username = '" + username + "'";
         ResultSet result = getConnection().prepareStatement(sql).executeQuery();
@@ -114,7 +114,7 @@ public class CupCakeMapper {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
         return roleBoolean;
     }
@@ -123,11 +123,11 @@ public class CupCakeMapper {
      * @author Bringordie - Frederik Braagaard
      * @return returns an arraylist of all the toppings in the DB.
      */
-    public static ArrayList<Topping> getToppings() throws SQLException, ClassNotFoundException {
+    public ArrayList<Topping> getToppings() throws SQLException, ClassNotFoundException {
         ArrayList<Topping> toppings = new ArrayList();
         String sql = "select * from toppings";
-        ResultSet result = null;
-        result = getConnection().prepareStatement(sql).executeQuery();
+        //ResultSet result = null;
+        ResultSet result = getConnection().prepareStatement(sql).executeQuery();
 
         try {
             while (result.next()) {
@@ -137,8 +137,14 @@ public class CupCakeMapper {
                 toppings.add(new Topping(toppingName, price, idTopping));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //toppings.setToppingsFromDB(toppings);
+        //Topping topping = new Topping();
+        //toppings.setToppingsFromDB(toppings);
+        //Topping topping = new Topping();
+        
+        
         return toppings;
     }
 
@@ -146,11 +152,11 @@ public class CupCakeMapper {
      * @author Bringordie - Frederik Braagaard
      * @return returns an arraylist of all the buttoms in the DB.
      */
-    public static ArrayList<Bottom> getBottoms() throws SQLException, ClassNotFoundException {
+    public ArrayList<Bottom> getBottoms() throws SQLException, ClassNotFoundException {
         ArrayList<Bottom> bottoms = new ArrayList();
         String sql = "select * from bottoms";
-        ResultSet result = null;
-        result = getConnection().prepareStatement(sql).executeQuery();
+        //ResultSet result = null;
+        ResultSet result = getConnection().prepareStatement(sql).executeQuery();
 
         try {
             while (result.next()) {
@@ -160,7 +166,7 @@ public class CupCakeMapper {
                 bottoms.add(new Bottom(buttomName, price, idButtom));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
         return bottoms;
     }
@@ -168,7 +174,7 @@ public class CupCakeMapper {
     /**
      * @author Bringordie - Frederik Braagaard
      */
-    public static void updateBalance(String username, double Addbalance) throws SQLException, ClassNotFoundException {
+    public void updateBalance(String username, double Addbalance) throws SQLException, ClassNotFoundException {
 
         String sql = "UPDATE users set balance = balance +" + Addbalance + " where Username = '" + username + "'";
         try {
@@ -182,7 +188,7 @@ public class CupCakeMapper {
     /**
      * @author Bringordie - Frederik Braagaard
      */
-    public static double getBalance(String username) throws SQLException, ClassNotFoundException {
+    public double getBalance(String username) throws SQLException, ClassNotFoundException {
 
         String sql = "select balance from users where Username = '" + username + "'";
         ResultSet result = getConnection().prepareStatement(sql).executeQuery();
@@ -193,7 +199,7 @@ public class CupCakeMapper {
                 balancesum = result.getDouble(1);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
         return balancesum;
     }
@@ -201,7 +207,7 @@ public class CupCakeMapper {
     /**
      * @author Bringordie - Frederik Braagaard
      */
-    public static int getLatestOrderNumber() throws SQLException, ClassNotFoundException {
+    public int getLatestOrderNumber() throws SQLException, ClassNotFoundException {
 
         String sql = "select count(Ordernumber) from completeorders";
         ResultSet result = getConnection().prepareStatement(sql).executeQuery();
@@ -211,7 +217,7 @@ public class CupCakeMapper {
                 latestOrderNumber = result.getInt(1);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
         return latestOrderNumber;
     }
@@ -220,7 +226,7 @@ public class CupCakeMapper {
      * @author Bringordie - Frederik Braagaard
      */
     // To do: finalize later
-    public static void createCompletedOrder(int idUser, double totalprice) throws SQLException, ClassNotFoundException {
+    public void createCompletedOrder(int idUser, double totalprice) throws SQLException, ClassNotFoundException {
 
         String sql = "INSERT INTO completeorders(idUser, Total_price)VALUES(?,?)";
 
@@ -238,7 +244,7 @@ public class CupCakeMapper {
      * @author Bringordie - Frederik Braagaard
      */
     // To do logic is missing in the classes to complete this.
-    public static void createLineItems(ArrayList<LineItems> lineitems) throws SQLException, ClassNotFoundException {
+    public void createLineItems(ArrayList<LineItems> lineitems) throws SQLException, ClassNotFoundException {
 
         int createOrderNumber = getLatestOrderNumber() + 1;
 
@@ -255,7 +261,7 @@ public class CupCakeMapper {
     /**
      * @author Bringordie - Frederik Braagaard
      */
-    public static String getNameOfUser(String username) throws SQLException, ClassNotFoundException {
+    public String getNameOfUser(String username) throws SQLException, ClassNotFoundException {
 
         String sql = "select Name from users where Username = '" + username + "'";
         ResultSet result = getConnection().prepareStatement(sql).executeQuery();
@@ -265,7 +271,7 @@ public class CupCakeMapper {
                 name = result.getString(1);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
         return name;
     }

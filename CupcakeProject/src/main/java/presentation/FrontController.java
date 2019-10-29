@@ -20,10 +20,6 @@ public class FrontController extends HttpServlet {
             String view = cmd.execute(request, response);
             request.getRequestDispatcher("/WEB-INF/" + view + ".jsp").forward(request, response);
         } catch (SQLException ex) {
-            
-//        } catch (LoginException ex) {
-//            request.setAttribute("error", ex.getMessage());
-//            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
     }
 

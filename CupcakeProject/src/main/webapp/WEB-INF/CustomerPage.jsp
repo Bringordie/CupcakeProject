@@ -1,9 +1,10 @@
 <%-- 
     Document   : CustomerPage
     Created on : Oct 17, 2019, 1:57:15 PM
-    Author     : 
+    Author     : Bringordie - Frederik Braagaard
 --%>
 
+<%@page import="logic.LineItems"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,6 +14,8 @@
     </head>
     <body>
     <h1>Welcome <% out.println(session.getAttribute("userloggedinname")); %></h1>
+    <% //LineItems.setCupCakeTempHolder(); %>
+    <%  //out.println(LineItems.getLineitems());  %>
     
     <form action="FrontController" >
                 <input type="hidden" name="cmd" value="goToProducts" />

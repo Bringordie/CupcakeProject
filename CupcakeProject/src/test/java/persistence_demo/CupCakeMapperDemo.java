@@ -116,7 +116,7 @@ public class CupCakeMapperDemo {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CupCakeMapperDemo.class.getName()).log(Level.SEVERE, null, ex);
         }
         return roleBoolean;
     }
@@ -139,7 +139,7 @@ public class CupCakeMapperDemo {
                 toppings.add(new Topping(toppingName, price, idTopping));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CupCakeMapperDemo.class.getName()).log(Level.SEVERE, null, ex);
         }
         return toppings;
     }
@@ -162,7 +162,7 @@ public class CupCakeMapperDemo {
                 bottoms.add(new Bottom(buttomName, price, idButtom));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CupCakeMapperDemo.class.getName()).log(Level.SEVERE, null, ex);
         }
         return bottoms;
     }
@@ -195,7 +195,7 @@ public class CupCakeMapperDemo {
                 balancesum = result.getDouble(1);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CupCakeMapperDemo.class.getName()).log(Level.SEVERE, null, ex);
         }
         return balancesum;
     }
@@ -303,7 +303,7 @@ public class CupCakeMapperDemo {
                 latestOrderNumber = result.getInt(1);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CupCakeMapperDemo.class.getName()).log(Level.SEVERE, null, ex);
         }
         return latestOrderNumber;
     }
@@ -340,7 +340,7 @@ public class CupCakeMapperDemo {
                 name = result.getString(1);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CupCakeMapper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CupCakeMapperDemo.class.getName()).log(Level.SEVERE, null, ex);
         }
         return name;
     }

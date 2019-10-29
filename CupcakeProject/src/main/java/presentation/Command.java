@@ -1,18 +1,20 @@
 package presentation;
 
-//import domainmodel.LoginException;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import persistence.DBFacade;
 
 /**
  *
  * @author Bringordie - Frederik Braagaard
  */
-public abstract class Command {
+public abstract class Command{
+    DBFacade db = new DBFacade();
 
     private static HashMap<String, Command> commands;
 
@@ -22,9 +24,9 @@ public abstract class Command {
         commands.put("gotoLoginUser", new goToLoginCommand());
         commands.put("login", new LoginCommand());
         commands.put("registration", new RegisterCommand());
-        commands.put("goToProducts", new goToProducts());
-        commands.put("addBalance", new addBalance());
-        commands.put("payment", new addCupCakeToShoppingCart());
+        commands.put("goToProducts", new GoToProductsCommand());
+        commands.put("addBalance", new AddBalanceCommand());
+        commands.put("payment", new AddCupCakeCommand());
     }
 
     static Command from(HttpServletRequest request) {

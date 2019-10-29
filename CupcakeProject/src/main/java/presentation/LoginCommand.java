@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
-import persistence.CupCakeMapper;
 
 /**
  * 
@@ -19,9 +18,9 @@ public class LoginCommand extends Command {
         throws ServletException, IOException, SQLException, ClassNotFoundException{
         String username = request.getParameter("usernamelogin");
         String password = request.getParameter("passwordlogin");
-        Boolean usernameDB = CupCakeMapper.checkUsername(username);
-        Boolean passwordDB = CupCakeMapper.checkPassword(username, password);
-        Boolean getRole = CupCakeMapper.checkRole(username);
+        Boolean usernameDB = db.checkUsername(username);
+        Boolean passwordDB = db.checkPassword(username, password);
+        Boolean getRole = db.checkRole(username);
 
         logic.User saveUsername = new logic.User();
         saveUsername.setUsername(username);
@@ -31,7 +30,7 @@ public class LoginCommand extends Command {
         if (usernameDB && passwordDB == true && getRole == true) {
             WebPage = "AdminPage";
         } else if (usernameDB && passwordDB == true && getRole == false) {
-            String getUsername = CupCakeMapper.getNameOfUser(username);
+            String getUsername = db.getNameOfUser(username);
             
         request.getSession().setAttribute("userloggedinname", getUsername);
             WebPage = "CustomerPage";
