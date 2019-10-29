@@ -44,11 +44,10 @@ CREATE TABLE lineitems (
 	idBottom INTEGER,
     idTopping INTEGER,
     quantity INTEGER,
-    idUser INTEGER,
     Price DOUBLE,
-    FOREIGN KEY (idUser) REFERENCES users(idUsers),
     FOREIGN KEY (idBottom) REFERENCES bottoms(idBottoms),
-    FOREIGN KEY (idTopping) REFERENCES toppings(idToppings)
+    FOREIGN KEY (idTopping) REFERENCES toppings(idToppings),
+    FOREIGN KEY (OrdreNumber) REFERENCES completeorders(Ordernumber)
 );
 
 insert into bottoms (bottomName, Price) values ("Chocolate", 5.00);
