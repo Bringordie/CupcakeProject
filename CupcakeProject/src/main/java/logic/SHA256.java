@@ -11,6 +11,7 @@ public class SHA256 {
     
     /**
      * @author Bringordie - Frederik Braagaard
+     * @param inputBytes takes the input of bytes.
      * @return returns HexBinary SHA-256 encryption of an password used for
      * adding password to the DB but also used for login to check match.
     */
